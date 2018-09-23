@@ -1,7 +1,6 @@
 package ru.sayakhov;
 
 import java.io.*;
-import java.util.Arrays;
 
 import static ru.sayakhov.copyfiles.CopyFies.copyFiles;
 import static ru.sayakhov.deletefiles.DeleteFiles.deleteDirectory;
@@ -9,8 +8,9 @@ import static ru.sayakhov.renamefiles.RenameFiles.rename;
 
 public class Main {
     static int n = 0;
-    static String[] pathArray;
+    static String[] pathArray = new String[0];
     static File newPath;
+
     public static void main(String[] args) throws IOException {
 
         //Создаем каталоги для создания вайлов и копирования
@@ -56,36 +56,46 @@ public class Main {
         // на соответствующее количество пробелов.
         File x = fileDir.getParentFile();//Возвращает абстрактный путь родителя абстрактного пути, или null, если путь не указывает родительский каталог.
         String stringname = x.getName();// Возвращает имя файла или каталога, по указанному абстрактному имени пути.
-        System.out.println(x+" "+stringname);
+        System.out.println(x + " " + stringname);
 /*        pathArray = new String[5];
         pathArray[0] = fileDir.getName();
         pathArray[1] = fileDir.getName();
 
         */
-        metod(fileDir);
 
+        pathToArray(fileDir);
+        for ( int i = pathArray.length; i >= 1; i-- ) {
+            String line = " ";
+
+            for (int n = 0; n < pathArray.length; n++) {
+                StringBuilder sb = new StringBuilder(line.length() * n);
+                sb.append(line);
+
+            }
+            System.out.print(line);
+            System.out.println(pathArray[i-1]);
+
+
+        }
 
 
         // Удаляем файлы, удаляем папки через рекурсией
-        deleteDirectory(fileDir=new File("TEMP"));
+        deleteDirectory(fileDir = new File("TEMP"));
     }
 
-    private static void metod(File path) {
-        String[] pathArray = new String[1 + n];// задаем размер массива
-        pathArray[n++] = path.getName();//присваем 0 идексу имя
 
-        newPath = path.getParentFile();//переходим родительский каталлог
-
-        if (newPath.exists()) {
-                metod(newPath);//
+    private static void pathToArray(File path) {
+        String[] pathArray2 = new String[pathArray.length + 1];
+        for ( int i = 0; i < pathArray.length; i++ ) {
+            pathArray2[i] = pathArray[i];
         }
-    }
-
-    public static String[] getPathArray() {
-        return pathArray;
-    }
-
-    public static void setPathArray(String[] pathArray) {
-        Main.pathArray = pathArray;
+        if (path != null) {
+            pathArray2[pathArray.length] = path.getName(); //path.getParentFile().getName();
+            pathArray = pathArray2;
+            newPath = path.getParentFile();
+            if (path.exists()) {
+                pathToArray(newPath);
+            }
+        }
     }
 }

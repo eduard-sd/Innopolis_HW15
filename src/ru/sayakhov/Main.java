@@ -1,13 +1,16 @@
 package ru.sayakhov;
 
 import java.io.*;
+import java.util.Arrays;
 
 import static ru.sayakhov.copyfiles.CopyFies.copyFiles;
 import static ru.sayakhov.deletefiles.DeleteFiles.deleteDirectory;
 import static ru.sayakhov.renamefiles.RenameFiles.rename;
 
 public class Main {
-
+    static int n = 0;
+    static String[] pathArray;
+    static File newPath;
     public static void main(String[] args) throws IOException {
 
         //Создаем каталоги для создания вайлов и копирования
@@ -51,16 +54,38 @@ public class Main {
         // Написать рекурсивный обход всех файлов и подкаталогов внутри заданного каталога.
         // Программа должна следить за глубиной рекурсии, сдвигая название файла/каталога
         // на соответствующее количество пробелов.
-        filePathOut(fileDir);
+        File x = fileDir.getParentFile();//Возвращает абстрактный путь родителя абстрактного пути, или null, если путь не указывает родительский каталог.
+        String stringname = x.getName();// Возвращает имя файла или каталога, по указанному абстрактному имени пути.
+        System.out.println(x+" "+stringname);
+/*        pathArray = new String[5];
+        pathArray[0] = fileDir.getName();
+        pathArray[1] = fileDir.getName();
+
+        */
+        metod(fileDir);
+
+
 
         // Удаляем файлы, удаляем папки через рекурсией
         deleteDirectory(fileDir=new File("TEMP"));
     }
 
-    private static void filePathOut(File sourceLocation) {
-        File[] files = sourceLocation.listFiles();
-        for(files)
+    private static void metod(File path) {
+        String[] pathArray = new String[1 + n];// задаем размер массива
+        pathArray[n++] = path.getName();//присваем 0 идексу имя
+
+        newPath = path.getParentFile();//переходим родительский каталлог
+
+        if (newPath.exists()) {
+                metod(newPath);//
+        }
     }
 
+    public static String[] getPathArray() {
+        return pathArray;
+    }
 
+    public static void setPathArray(String[] pathArray) {
+        Main.pathArray = pathArray;
+    }
 }

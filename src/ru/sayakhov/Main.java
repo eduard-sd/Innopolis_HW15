@@ -54,30 +54,13 @@ public class Main {
         // Написать рекурсивный обход всех файлов и подкаталогов внутри заданного каталога.
         // Программа должна следить за глубиной рекурсии, сдвигая название файла/каталога
         // на соответствующее количество пробелов.
-        File x = fileDir.getParentFile();//Возвращает абстрактный путь родителя абстрактного пути, или null, если путь не указывает родительский каталог.
-        String stringname = x.getName();// Возвращает имя файла или каталога, по указанному абстрактному имени пути.
-        System.out.println(x + " " + stringname);
-/*        pathArray = new String[5];
-        pathArray[0] = fileDir.getName();
-        pathArray[1] = fileDir.getName();
-
-        */
-
         pathToArray(fileDir);
+        int j = 0;
         for ( int i = pathArray.length; i >= 1; i-- ) {
             String line = " ";
-
-            for (int n = 0; n < pathArray.length; n++) {
-                StringBuilder sb = new StringBuilder(line.length() * n);
-                sb.append(line);
-
-            }
-            System.out.print(line);
+            System.out.print(repeat(" ", j++));
             System.out.println(pathArray[i-1]);
-
-
         }
-
 
         // Удаляем файлы, удаляем папки через рекурсией
         deleteDirectory(fileDir = new File("TEMP"));
@@ -90,12 +73,19 @@ public class Main {
             pathArray2[i] = pathArray[i];
         }
         if (path != null) {
-            pathArray2[pathArray.length] = path.getName(); //path.getParentFile().getName();
+            pathArray2[pathArray.length] = path.getName();
             pathArray = pathArray2;
             newPath = path.getParentFile();
             if (path.exists()) {
                 pathToArray(newPath);
             }
         }
+    }
+
+    public static String repeat(String str, int times) {
+        StringBuilder sb = new StringBuilder(str.length() * times);
+        for (int i = 0; i < times; i++)
+            sb.append(str);
+        return sb.toString();
     }
 }

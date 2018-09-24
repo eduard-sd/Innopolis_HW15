@@ -24,7 +24,7 @@ public class Main {
         }
 
 
-        // Создаем фалы в каталоге:  "TEMP\inside\need\delete\all
+        // Создаем файлы в каталоге:  "TEMP\inside\need\delete\all
         try {
             String filePath1 = "TEMP\\inside\\need\\delete\\All\\fileAll1.txt";
             File file1 = new File(filePath1);
@@ -66,7 +66,7 @@ public class Main {
         deleteDirectory(fileDir = new File("TEMP"));
     }
 
-
+//метод получения занесения папок в лист
     private static void pathToArray(File path) {
         String[] pathArray2 = new String[pathArray.length + 1];
         for ( int i = 0; i < pathArray.length; i++ ) {
@@ -81,7 +81,7 @@ public class Main {
             }
         }
     }
-
+//метод умножения строки
     public static String repeat(String str, int times) {
         StringBuilder sb = new StringBuilder(str.length() * times);
         for (int i = 0; i < times; i++)
